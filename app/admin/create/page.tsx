@@ -1,8 +1,6 @@
 "use client";
 
-import NextImage from "next/image";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
 import { HU, GB, DE } from "country-flag-icons/react/3x2";
 import Link from "next/link";
 import Tooltip from "@/app/ui/common/Tooltip";
@@ -11,10 +9,11 @@ import TiptapEditor from "@/app/ui/admin/editor/TipTapEditor";
 import { createProduct } from "@/app/lib/action";
 import ToolBar from "@/app/ui/admin/editor/Toolbar";
 import { EditorContent } from "@tiptap/react";
-import { ChangeEvent, useState, MouseEvent } from "react";
+import { useState } from "react";
 import SubmitButton from "../../ui/common/SubmitButton";
 import SelectInput from "../../ui/common/SelectInput";
 import SavePopup from "../../ui/admin/editor/SavePopup";
+import ImageUploader from "../../ui/admin/editor/ImageUploader";
 
 export default function Page() {
   const status: { value: ProductStatus; label: string }[] = [
@@ -37,40 +36,20 @@ export default function Page() {
   const [error, setError] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
+  const handleUploadedFileState = (newValue: File[]) => {
+    setUploadedFiles(newValue);
+  };
+
   // rich text editors for description fields
   const editorHu = TiptapEditor();
   const editorDe = TiptapEditor();
   const editorGb = TiptapEditor();
 
-  const handleUploadFiles = (files: File[]) => {
-    const uploaded = [...uploadedFiles];
-    files.some((file) => {
-      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-        uploaded.push(file);
-        console.log("size " + file.size);
-      }
-    });
-    setUploadedFiles(uploaded);
-  };
-
-  const handleFileEvent = (e: ChangeEvent<HTMLInputElement>) => {
-    const chosenFiles = Array.prototype.slice.call(e.target.files);
-    handleUploadFiles(chosenFiles);
-  };
-
-  const removeImage = (fileRemoved: File) => {
-    const files = uploadedFiles.filter(
-      (file) => file.name !== fileRemoved.name
-    );
-
-    setUploadedFiles(files);
-  };
-
   const submitForm = async (form: FormData) => {
     if (editorHu) form.append("descriptionHu", editorHu.getHTML());
     if (editorDe) form.append("descriptionDe", editorDe.getHTML());
     if (editorGb) form.append("descriptionGb", editorGb.getHTML());
-    console.log("files " + uploadedFiles.length);
+
     const { error, fieldErrors } = await createProduct(form);
 
     if (error) {
@@ -162,43 +141,7 @@ export default function Page() {
           <ToolBar editor={editorGb} />
           <EditorContent editor={editorGb} />
         </fieldset>
-        <input
-          id="fileUpload"
-          type="file"
-          multiple
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileEvent}
-        />
-        <label
-          htmlFor="fileUpload"
-          className="my-5 inline-block px-4 py-3 rounded bg-gray-200 cursor-pointer "
-        >
-          <a>Képek kiválasztása</a>
-        </label>
-        <div className="uploaded-files-list">
-          {uploadedFiles.map((file, index) => (
-            <div
-              key={file.name}
-              className="inline-block mx-4 relative rounded overflow-hidden"
-            >
-              <button
-                className="absolute p-1 right-2 top-2 bg-slate-50"
-                onClick={() => removeImage(file)}
-                type="button"
-              >
-                <FaTrashCan />
-              </button>
-              <NextImage
-                src={URL.createObjectURL(file)}
-                width={0}
-                height={0}
-                alt="gallery"
-                className="inline w-[200px] h-auto"
-              />
-            </div>
-          ))}
-        </div>
+        <ImageUploader setFiles={handleUploadedFileState} />
         <SubmitButton />
       </form>
     </main>
