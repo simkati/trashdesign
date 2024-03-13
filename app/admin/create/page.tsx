@@ -50,6 +50,10 @@ export default function Page() {
     if (editorDe) form.append("descriptionDe", editorDe.getHTML());
     if (editorGb) form.append("descriptionGb", editorGb.getHTML());
 
+    uploadedFiles.forEach((file, index) => {
+      form.append("file", file);
+    });
+
     const { error, fieldErrors } = await createProduct(form);
 
     if (error) {

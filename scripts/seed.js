@@ -16,6 +16,7 @@ async function seedProducts(client) {
           descriptionHu VARCHAR(5000),
           descriptionDe VARCHAR(5000),
           descriptionGb VARCHAR(5000),
+          galleryFolder VARCHAR(255) NOT NULL UNIQUE,
           gallery VARCHAR[],
           modifyDate DATE NOT NULL
         );

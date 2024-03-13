@@ -8,13 +8,19 @@ type ImageUploadProp = {
 
 export default function ImageUpload({ setFiles }: ImageUploadProp) {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [error, setError] = useState(false);
 
   const handleUploadFiles = (files: File[]) => {
+    setError(false);
     const uploaded = [...uploadedFiles];
     files.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-        uploaded.push(file);
         console.log("size " + file.size);
+        if (file.size > 3000000) {
+          setError(true);
+        } else {
+          uploaded.push(file);
+        }
       }
     });
     setUploadedFiles(uploaded);
@@ -51,6 +57,9 @@ export default function ImageUpload({ setFiles }: ImageUploadProp) {
       >
         <a>Képek kiválasztása</a>
       </label>
+      {error && (
+        <p className="text-red-800 font-bold">A maximális képméret 3 MB!</p>
+      )}
       <div className="uploaded-files-list">
         {uploadedFiles.map((file, index) => (
           <div
