@@ -7,18 +7,18 @@ async function seedProducts(client) {
     const createTable = await client.sql`
         CREATE TABLE IF NOT EXISTS products (
           id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-          titleHu VARCHAR(255) NOT NULL UNIQUE,
-          titleDe VARCHAR(255),
-          titleGb VARCHAR(255),
+          title_hu VARCHAR(255) NOT NULL UNIQUE,
+          title_de VARCHAR(255),
+          title_gb VARCHAR(255),
           price INT NOT NULL,
           status TEXT,
           category TEXT,
-          descriptionHu VARCHAR(5000),
-          descriptionDe VARCHAR(5000),
-          descriptionGb VARCHAR(5000),
-          galleryFolder VARCHAR(255) NOT NULL UNIQUE,
+          description_hu VARCHAR(5000),
+          description_de VARCHAR(5000),
+          description_gb VARCHAR(5000),
+          gallery_folder VARCHAR(255) NOT NULL UNIQUE,
           gallery VARCHAR[],
-          modifyDate DATE NOT NULL
+          modify_date DATE NOT NULL
         );
       `;
 

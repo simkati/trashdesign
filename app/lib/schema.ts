@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const ProductFormSchema = z.object({
   id: z.string().uuid(),
-  titleHu: z.string().min(1),
-  titleDe: z.string(),
-  titleGb: z.string(),
+  title_hu: z.string().min(1),
+  title_de: z.string(),
+  title_gb: z.string(),
   price: z.coerce.number(),
   status: z.enum(["SALE", "BOOKED", "SOLED", "INACTIVE"]),
   category: z.enum([
@@ -16,9 +16,9 @@ export const ProductFormSchema = z.object({
     "COFFEE",
     "COLLECTION",
   ]),
-  descriptionHu: z.string(),
-  descriptionDe: z.string(),
-  descriptionGb: z.string(),
+  description_hu: z.string(),
+  description_de: z.string(),
+  description_gb: z.string(),
   gallery: z.array(z.string()),
-  modifyDate: z.string(),
+  modify_date: z.string(),
 });

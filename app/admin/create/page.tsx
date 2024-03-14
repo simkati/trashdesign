@@ -46,9 +46,9 @@ export default function Page() {
   const editorGb = TiptapEditor();
 
   const submitForm = async (form: FormData) => {
-    if (editorHu) form.append("descriptionHu", editorHu.getHTML());
-    if (editorDe) form.append("descriptionDe", editorDe.getHTML());
-    if (editorGb) form.append("descriptionGb", editorGb.getHTML());
+    if (editorHu) form.append("description_hu", editorHu.getHTML());
+    if (editorDe) form.append("description_de", editorDe.getHTML());
+    if (editorGb) form.append("description_gb", editorGb.getHTML());
 
     uploadedFiles.forEach((file, index) => {
       form.append("file", file);
@@ -94,7 +94,7 @@ export default function Page() {
             <HU title="Magyar" className="mr-3 w-8 inline" />
             <input
               type="text"
-              name="titleHu"
+              name="title_hu"
               required
               className="border w-[calc(100%-44px)] focused-input"
             />
@@ -103,7 +103,7 @@ export default function Page() {
             <DE title="Német" className="mr-3 w-8 inline" />
             <input
               type="text"
-              name="titleDe"
+              name="title_de"
               className="border w-[calc(100%-44px)] focused-input"
             />
           </div>
@@ -111,7 +111,7 @@ export default function Page() {
             <GB title="Angol" className="mr-3 w-8 inline" />
             <input
               type="text"
-              name="titleGb"
+              name="title_gb"
               className="border w-[calc(100%-44px)] focused-input"
             />
           </div>

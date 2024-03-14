@@ -11,7 +11,7 @@ import { uploadImages, createFolder } from "./images";
 
 const CreateProduct = ProductFormSchema.omit({
   id: true,
-  modifyDate: true,
+  modify_date: true,
   gallery: true,
 });
 
@@ -32,19 +32,19 @@ export async function createProduct(formData: FormData) {
   }
 
   const {
-    titleHu,
-    titleDe,
-    titleGb,
+    title_hu,
+    title_de,
+    title_gb,
     price,
     status,
     category,
-    descriptionHu,
-    descriptionDe,
-    descriptionGb,
+    description_hu,
+    description_de,
+    description_gb,
   } = validateForm.data;
 
   const date = new Date().toISOString().split("T")[0];
-  const galleryFolder = slugify(titleHu);
+  const galleryFolder = slugify(title_hu);
 
   // upload images to cloudinary and get urls
 
@@ -62,7 +62,7 @@ export async function createProduct(formData: FormData) {
     // if no image create empty folder
 
     if (urls.length === 0) {
-      createFolder(galleryFolder);
+      await createFolder(galleryFolder);
     }
 
     // insert product into database
@@ -71,8 +71,8 @@ export async function createProduct(formData: FormData) {
 
     try {
       await sql`
-      INSERT INTO products (titleHu, titleDe, titleGb, price, status, category, descriptionHu, descriptionDe, descriptionGb, modifyDate, galleryFolder, gallery)
-      VALUES (${titleHu}, ${titleDe}, ${titleGb}, ${price}, ${status}, ${category}, ${descriptionHu}, ${descriptionDe}, ${descriptionGb}, ${date}, ${galleryFolder}, ARRAY [${gallery}]) 
+      INSERT INTO products (title_hu, title_de, title_gb, price, status, category, description_hu, description_de, description_gb, modify_date, gallery_folder, gallery)
+      VALUES (${title_hu}, ${title_de}, ${title_gb}, ${price}, ${status}, ${category}, ${description_hu}, ${description_de}, ${description_gb}, ${date}, ${galleryFolder}, ARRAY [${gallery}]) 
     `;
     } catch (error) {
       return {

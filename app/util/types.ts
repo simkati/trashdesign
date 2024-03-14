@@ -17,15 +17,16 @@ export enum ProductCategory {
 
 export interface Product {
   id: string;
-  titleHu: string;
-  titleDe: string;
-  titleGb: string;
+  title_hu: string;
+  title_de: string;
+  title_gb: string;
   price: number;
   category: ProductCategory;
   status: ProductStatus;
-  descriptionHu: string;
-  descriptionDe: string;
-  descriptionGb: string;
+  description_hu: string;
+  description_de: string;
+  description_gb: string;
   gallery: string[];
-  modifyDate: string;
+  modify_date: string;
+  gallery_folder: string;
 }
