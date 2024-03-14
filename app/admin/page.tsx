@@ -10,19 +10,21 @@ export default async function Page() {
 
   return (
     <main className="max-w-4xl mx-auto">
-      <Link href="/admin/create" className="float-right mr-5">
-        <button className="border p-2">
-          <AiOutlineFileAdd className="inline" />
-          <span className="ml-2">Új termék</span>
-        </button>
-      </Link>
+      <div className="mb-5">
+        <Link href="/admin/create" className="float-right">
+          <button className="bg-green-800 font-semibold text-white p-2 rounded">
+            <AiOutlineFileAdd className="inline" />
+            <span className="ml-2">Új termék</span>
+          </button>
+        </Link>
+      </div>
       {products.length === 0 && (
         <div className="justify-center align-middle fixed top-1/2 left-1/2 h-screen">
           <p className="text-lg  mx-auto">Nincsenek termékek</p>
         </div>
       )}
-      <div>
-        <ul className="grid-cols-3 grid gap-2">
+      <div className="pt-5 clear-both">
+        <ul className="grid-cols-3 grid gap-3">
           {products.map((product) => (
             <li key={product.id}>
               <ProductCard product={product} />
