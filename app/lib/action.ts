@@ -70,9 +70,8 @@ export async function createProduct(formData: FormData) {
     const gallery = `'${urls.join("', '")}'`;
 
     try {
-      await sql`
-      INSERT INTO products (title_hu, title_de, title_gb, price, status, category, description_hu, description_de, description_gb, modify_date, gallery_folder, gallery)
-      VALUES (${title_hu}, ${title_de}, ${title_gb}, ${price}, ${status}, ${category}, ${description_hu}, ${description_de}, ${description_gb}, ${date}, ${galleryFolder}, ${urls}) 
+      // @ts-ignore
+      await sql` INSERT INTO products (title_hu, title_de, title_gb, price, status, category, description_hu, description_de, description_gb, modify_date, gallery_folder, gallery) VALUES (${title_hu}, ${title_de}, ${title_gb}, ${price}, ${status}, ${category}, ${description_hu}, ${description_de}, ${description_gb}, ${date}, ${galleryFolder}, ${urls}) 
     `;
     } catch (error) {
       return {
