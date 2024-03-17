@@ -43,7 +43,7 @@ export async function createProduct(formData: FormData) {
     description_gb,
   } = validateForm.data;
 
-  const date = new Date().toISOString().split("T")[0];
+  const date = new Date().toISOString();
   const galleryFolder = slugify(title_hu);
 
   // upload images to cloudinary and get urls

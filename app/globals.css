@@ -4,6 +4,6 @@
 
 @layer components {
   .focused-input {
-    @apply focus:outline-none focus:ring focus:border-blue-500;
+    @apply focus:outline-none focus:ring focus:border-green-500 focus:ring-green-500;
   }
 }

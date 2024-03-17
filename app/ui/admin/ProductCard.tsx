@@ -12,7 +12,7 @@ export default function ProductCard({ product }: ProductCardProp) {
   const ImageUrl = product.gallery[0];
 
   return (
-    <Link href={`/update/${product.id}`} className="cursor-pointer">
+    <Link href={`/admin/${product.id}/edit`} className="cursor-pointer">
       <div className="w-70 h-56 border border-gray-300 rounded shadow-gray-300 shadow-md relative">
         <p className="text-center py-2 capitalize">{product.title_hu}</p>
         <div className="grid grid-cols-5 gap-3">

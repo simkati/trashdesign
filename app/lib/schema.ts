@@ -6,7 +6,7 @@ export const ProductFormSchema = z.object({
   title_de: z.string(),
   title_gb: z.string(),
   price: z.coerce.number(),
-  status: z.enum(["SALE", "BOOKED", "SOLED", "INACTIVE"]),
+  status: z.enum(["SALE", "BOOKED", "SOLD", "INACTIVE"]),
   category: z.enum([
     "FURNITURE",
     "LAMP",

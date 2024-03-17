@@ -1,16 +1,37 @@
-import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { fetchFilteredProducts } from "../lib/data";
+import { fetchFilteredProducts, fetchProductsPages } from "../lib/data";
 import { Product } from "../util/types";
 import ProductCard from "../ui/admin/ProductCard";
+import Pagination from "../ui/admin/Pagination";
+import Search from "../ui/admin/Search";
 
-export default async function Page() {
-  const products: Product[] = await fetchFilteredProducts("", 1);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+    status?: string;
+    category?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
+  const status = searchParams?.status || "";
+  const category = searchParams?.category || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const products: Product[] = await fetchFilteredProducts(
+    query,
+    status,
+    category,
+    currentPage
+  );
+  const totalPages = await fetchProductsPages(query, status, category);
 
   return (
     <main className="max-w-4xl mx-auto">
-      <div className="mb-5">
+      <div className="mb-3">
+        <Search />
         <Link href="/admin/create" className="float-right">
           <button className="bg-green-800 font-semibold text-white p-2 rounded">
             <AiOutlineFileAdd className="inline" />
@@ -32,6 +53,11 @@ export default async function Page() {
           ))}
         </ul>
       </div>
+      {totalPages > 1 && (
+        <div className="mt-5 flex w-full justify-center">
+          <Pagination totalPages={totalPages} />
+        </div>
+      )}
     </main>
   );
 }

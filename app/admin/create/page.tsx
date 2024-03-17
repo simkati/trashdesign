@@ -4,7 +4,6 @@ import { IoArrowBackSharp } from "react-icons/io5";
 import { HU, GB, DE } from "country-flag-icons/react/3x2";
 import Link from "next/link";
 import Tooltip from "@/app/ui/common/Tooltip";
-import { ProductCategory, ProductStatus } from "@/app/util/types";
 import TiptapEditor from "@/app/ui/admin/editor/TipTapEditor";
 import { createProduct } from "@/app/lib/action";
 import ToolBar from "@/app/ui/admin/editor/Toolbar";
@@ -14,25 +13,9 @@ import SubmitButton from "../../ui/common/SubmitButton";
 import SelectInput from "../../ui/common/SelectInput";
 import SavePopup from "../../ui/admin/editor/SavePopup";
 import ImageUploader from "../../ui/admin/editor/ImageUploader";
+import { statusOptions, categoryOptions } from "../../util/commonUtils";
 
 export default function Page() {
-  const status: { value: ProductStatus; label: string }[] = [
-    { value: ProductStatus.Inactive, label: "Inaktív" },
-    { value: ProductStatus.Sale, label: "Eladó" },
-    { value: ProductStatus.Booked, label: "Lefoglalva" },
-    { value: ProductStatus.Sold, label: "Eladva" },
-  ];
-
-  const category: { value: ProductCategory; label: string }[] = [
-    { value: ProductCategory.Furniture, label: "Bútor" },
-    { value: ProductCategory.Lamp, label: "Lámpa" },
-    { value: ProductCategory.Ornament, label: "Dísztárgy" },
-    { value: ProductCategory.Trifle, label: "Aprócikk" },
-    { value: ProductCategory.Materials, label: "Alapanyag" },
-    { value: ProductCategory.Coffee, label: "Kávé mánia" },
-    { value: ProductCategory.Collection, label: "Gyüjtemény" },
-  ];
-
   const [error, setError] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
@@ -81,11 +64,14 @@ export default function Page() {
           <p className="m-2 pr-2 text-red-800">{error}</p>
         </div>
       )}
-      <Tooltip message="vissza">
-        <Link href="/admin">
-          <IoArrowBackSharp size={30} />
-        </Link>
-      </Tooltip>
+      <div className="grid grid-cols-3">
+        <Tooltip message="vissza">
+          <Link href="/admin">
+            <IoArrowBackSharp size={30} />
+          </Link>
+        </Tooltip>
+        <h1 className="text-2xl col-span-2">Új termék létrehozása</h1>
+      </div>
       <form className="mt-10" action={submitForm}>
         <SavePopup />
         <fieldset>
@@ -124,8 +110,12 @@ export default function Page() {
             </label>
             <span className="pl-2">Euro</span>
           </div>
-          <SelectInput label="Státusz" options={status} name="status" />
-          <SelectInput label="Kategória" options={category} name="category" />
+          <SelectInput label="Státusz" options={statusOptions} name="status" />
+          <SelectInput
+            label="Kategória"
+            options={categoryOptions}
+            name="category"
+          />
         </fieldset>
         <fieldset className="mt-8">
           <legend className="mb-4">Termék leírása</legend>

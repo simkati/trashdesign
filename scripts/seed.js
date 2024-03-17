@@ -18,7 +18,7 @@ async function seedProducts(client) {
           description_gb VARCHAR(5000),
           gallery_folder VARCHAR(255) NOT NULL UNIQUE,
           gallery VARCHAR[],
-          modify_date DATE NOT NULL
+          modify_date TIMESTAMP NOT NULL
         );
       `;
 
