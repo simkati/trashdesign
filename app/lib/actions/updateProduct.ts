@@ -5,6 +5,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { uploadImages, deleteImages } from "../images";
+import { fetchProductByTitleHu } from "@/app/lib/data";
 
 const updateProductSchema = ProductFormSchema.omit({
   modify_date: true,
@@ -16,8 +17,6 @@ export default async function updateProduct(formData: FormData) {
   const validateForm = updateProductSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
-
-  // TODO check titleHu is not exist in database
 
   if (!validateForm.success) {
     return {
@@ -43,6 +42,20 @@ export default async function updateProduct(formData: FormData) {
   } = validateForm.data;
 
   const date = new Date().toISOString();
+
+  //check title_hu is unique
+  try {
+    const titleExist = await fetchProductByTitleHu(title_hu);
+    if (titleExist != id) {
+      return {
+        error:
+          "A magyar név már létezik az adatbázisban. Válasszon másik nevet.",
+        status: 500,
+      };
+    }
+  } catch (error) {
+    // means title_hu have not used yet or not changed
+  }
 
   // upload images to cloudinary and get urls
 

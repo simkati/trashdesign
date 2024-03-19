@@ -18,6 +18,23 @@ export async function fetchProductById(id: string) {
   }
 }
 
+export async function fetchProductByTitleHu(title_hu: string) {
+  noStore();
+  try {
+    const product = await sql<Product>`
+    SELECT 
+      id,
+      title_hu
+    FROM products
+    WHERE title_hu = ${title_hu};
+    `;
+
+    return product.rows[0].id;
+  } catch (error) {
+    throw new Error("Failed to fetch product.");
+  }
+}
+
 const ITEMS_PER_PAGE = 15;
 
 export async function fetchFilteredProducts(

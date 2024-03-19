@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { slugify } from "../../util/commonUtils";
 import { uploadImages, createFolder } from "../images";
+import { fetchProductByTitleHu } from "@/app/lib/data";
 
 const createProductSchema = ProductFormSchema.omit({
   id: true,
@@ -21,8 +22,6 @@ export default async function createProduct(formData: FormData) {
   const validateForm = createProductSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
-
-  // TODO check titleHu is not exist in database
 
   if (!validateForm.success) {
     return {
@@ -43,6 +42,19 @@ export default async function createProduct(formData: FormData) {
     description_gb,
   } = validateForm.data;
 
+  //check title_hu is unique
+  try {
+    const titleExist = await fetchProductByTitleHu(title_hu);
+    if (titleExist) {
+      return {
+        error:
+          "A magyar név már létezik az adatbázisban. Válasszon másik nevet.",
+        status: 500,
+      };
+    }
+  } catch (error) {
+    // means title_hu have not used yet
+  }
   const date = new Date().toISOString();
   const galleryFolder = slugify(title_hu);
 
@@ -80,6 +92,7 @@ export default async function createProduct(formData: FormData) {
       };
     }
   }
+
   revalidatePath("/admin/create");
   redirect("/admin");
 }
