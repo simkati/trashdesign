@@ -1,24 +1,24 @@
 "use server";
 
-import { ProductFormSchema } from "./schema";
+import { ProductFormSchema } from "../schema";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
-import { z } from "zod";
-import { slugify } from "../util/commonUtils";
-import { uploadImages, createFolder } from "./images";
+import { slugify } from "../../util/commonUtils";
+import { uploadImages, createFolder } from "../images";
 
-const CreateProduct = ProductFormSchema.omit({
+const createProductSchema = ProductFormSchema.omit({
   id: true,
   modify_date: true,
   gallery: true,
+  gallery_folder: true,
+  deletedImages: true,
 });
 
-export async function createProduct(formData: FormData) {
+export default async function createProduct(formData: FormData) {
   // form validation
 
-  const validateForm = CreateProduct.safeParse(
+  const validateForm = createProductSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
 

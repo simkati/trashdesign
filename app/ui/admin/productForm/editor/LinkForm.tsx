@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { validateUrl } from "../../../util/EditorUtils";
+import { validateUrl } from "../../../../util/EditorUtils";
 
 interface Props {
   visible: boolean;

@@ -19,6 +19,8 @@ export const ProductFormSchema = z.object({
   description_hu: z.string(),
   description_de: z.string(),
   description_gb: z.string(),
-  gallery: z.array(z.string()),
+  gallery: z.string(),
+  gallery_folder: z.string().min(1),
   modify_date: z.string(),
+  deletedImages: z.optional(z.string()),
 });

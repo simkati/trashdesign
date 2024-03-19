@@ -43,29 +43,28 @@ export default function ImageUpload({ setFiles }: ImageUploadProp) {
 
   return (
     <>
-      <input
-        id="fileUpload"
-        type="file"
-        multiple
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileEvent}
-      />
-      <label
-        htmlFor="fileUpload"
-        className="my-5 inline-block px-4 py-3 rounded bg-gray-200 cursor-pointer "
-      >
-        <a>Képek kiválasztása</a>
-      </label>
-      {error && (
-        <p className="text-red-800 font-bold">A maximális képméret 3 MB!</p>
-      )}
-      <div className="uploaded-files-list">
-        {uploadedFiles.map((file, index) => (
-          <div
-            key={file.name}
-            className="inline-block mx-4 relative rounded overflow-hidden"
-          >
+      <div>
+        <input
+          id="fileUpload"
+          type="file"
+          multiple
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileEvent}
+        />
+        <label
+          htmlFor="fileUpload"
+          className="my-5 inline-block px-4 py-3 rounded bg-gray-200 cursor-pointer "
+        >
+          <a>Képek kiválasztása</a>
+        </label>
+        {error && (
+          <p className="text-red-800 font-bold">A maximális képméret 3 MB!</p>
+        )}
+      </div>
+      <div className="inline-block">
+        {uploadedFiles.map((file) => (
+          <div key={file.name} className="inline-block mx-2 relative bg-black">
             <button
               className="absolute p-1 right-2 top-2 bg-slate-50"
               onClick={() => removeImage(file)}
@@ -75,10 +74,10 @@ export default function ImageUpload({ setFiles }: ImageUploadProp) {
             </button>
             <NextImage
               src={URL.createObjectURL(file)}
-              width={0}
-              height={0}
+              width={200}
+              height={200}
               alt="gallery"
-              className="inline w-[200px] h-auto"
+              className="inline rounded w-[200px] h-[200px] object-contain"
             />
           </div>
         ))}

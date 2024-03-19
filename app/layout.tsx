@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="hu">
       <body className={inter.className}>
         <Header />
-        <div className="min-h-[calc(100vh-150px)] mt-10">{children}</div>
+        <div className="min-h-[calc(100vh-150px)]">{children}</div>
         <Footer />
       </body>
     </html>

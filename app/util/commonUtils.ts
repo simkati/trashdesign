@@ -29,7 +29,7 @@ export function getStatus(status: ProductStatus) {
 export function getCategory(category: ProductCategory) {
   switch (category) {
     case ProductCategory.Coffee:
-      return "Kávé";
+      return "Kávé mánia";
     case ProductCategory.Collection:
       return "Gyűjtemény";
     case ProductCategory.Furniture:
@@ -37,7 +37,7 @@ export function getCategory(category: ProductCategory) {
     case ProductCategory.Lamp:
       return "Lámpa";
     case ProductCategory.Materials:
-      return "Anyagok";
+      return "Alapanyag";
     case ProductCategory.Ornament:
       return "Dísztárgy";
     case ProductCategory.Trifle:
