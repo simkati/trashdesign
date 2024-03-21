@@ -49,7 +49,8 @@ export default async function updateProduct(formData: FormData) {
     //check title_hu is unique
     try {
       const titleExist = await fetchProductByTitleHu(title_hu);
-      if (titleExist != id) {
+
+      if (titleExist && titleExist != id) {
         return {
           error:
             "A magyar név már létezik az adatbázisban. Válasszon másik nevet.",
@@ -57,7 +58,10 @@ export default async function updateProduct(formData: FormData) {
         };
       }
     } catch (error) {
-      // means title_hu have not used yet or not changed
+      return {
+        error: "Adatbázis hiba: " + error,
+        status: 500,
+      };
     }
 
     // upload images to cloudinary and get urls
@@ -78,8 +82,6 @@ export default async function updateProduct(formData: FormData) {
       // update product into database
       const databaseUrls = gallery.length > 0 ? gallery.split(",") : [];
       const galleryUrls = databaseUrls.concat(urls);
-      console.log("urls server " + urls);
-      console.log("galleryUrls server lendth " + galleryUrls.length);
 
       if (deletedUrls) {
         deleteImages(deletedUrls);
@@ -98,5 +100,10 @@ export default async function updateProduct(formData: FormData) {
     }
     revalidatePath("/admin/create");
     redirect("/admin");
+  } else {
+    return {
+      error: "No permission",
+      status: 500,
+    };
   }
 }

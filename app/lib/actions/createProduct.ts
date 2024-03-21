@@ -48,6 +48,7 @@ export default async function createProduct(formData: FormData) {
     //check title_hu is unique
     try {
       const titleExist = await fetchProductByTitleHu(title_hu);
+      console.log("exist" + titleExist);
       if (titleExist) {
         return {
           error:
@@ -56,7 +57,10 @@ export default async function createProduct(formData: FormData) {
         };
       }
     } catch (error) {
-      // means title_hu have not used yet
+      return {
+        error: "Adatbázis hiba: " + error,
+        status: 500,
+      };
     }
     const date = new Date().toISOString();
     const galleryFolder = slugify(title_hu);
@@ -95,8 +99,13 @@ export default async function createProduct(formData: FormData) {
         };
       }
     }
-  }
 
-  revalidatePath("/admin/create");
-  redirect("/admin");
+    revalidatePath("/admin/create");
+    redirect("/admin");
+  } else {
+    return {
+      error: "No permission",
+      status: 500,
+    };
+  }
 }

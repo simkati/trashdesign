@@ -28,8 +28,8 @@ export async function fetchProductByTitleHu(title_hu: string) {
     FROM products
     WHERE title_hu = ${title_hu};
     `;
-
-    return product.rows[0].id;
+    if (product.rows.length > 0) return product.rows[0].id;
+    return "";
   } catch (error) {
     throw new Error("Failed to fetch product.");
   }
