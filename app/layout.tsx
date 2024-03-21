@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./ui/header";
 import Footer from "./ui/footer";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="hu">
       <body className={inter.className}>
         <Header />
-        <div className="min-h-[calc(100vh-150px)]">{children}</div>
+        <div className="">{children}</div>
         <Footer />
       </body>
     </html>

@@ -30,3 +30,10 @@ export interface Product {
   modify_date: string;
   gallery_folder: string;
 }
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};

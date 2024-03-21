@@ -3,6 +3,7 @@
 import { ProductFormSchema } from "../schema";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { slugify } from "../../util/commonUtils";
 import { uploadImages, createFolder } from "../images";
@@ -17,79 +18,82 @@ const createProductSchema = ProductFormSchema.omit({
 });
 
 export default async function createProduct(formData: FormData) {
+  const authc = await auth();
+
   // form validation
+  if (authc) {
+    const validateForm = createProductSchema.safeParse(
+      Object.fromEntries(formData.entries())
+    );
 
-  const validateForm = createProductSchema.safeParse(
-    Object.fromEntries(formData.entries())
-  );
-
-  if (!validateForm.success) {
-    return {
-      error: "Hibás űrlap",
-      fieldErrors: validateForm.error.flatten().fieldErrors,
-    };
-  }
-
-  const {
-    title_hu,
-    title_de,
-    title_gb,
-    price,
-    status,
-    category,
-    description_hu,
-    description_de,
-    description_gb,
-  } = validateForm.data;
-
-  //check title_hu is unique
-  try {
-    const titleExist = await fetchProductByTitleHu(title_hu);
-    if (titleExist) {
+    if (!validateForm.success) {
       return {
-        error:
-          "A magyar név már létezik az adatbázisban. Válasszon másik nevet.",
-        status: 500,
+        error: "Hibás űrlap",
+        fieldErrors: validateForm.error.flatten().fieldErrors,
       };
     }
-  } catch (error) {
-    // means title_hu have not used yet
-  }
-  const date = new Date().toISOString();
-  const galleryFolder = slugify(title_hu);
 
-  // upload images to cloudinary and get urls
+    const {
+      title_hu,
+      title_de,
+      title_gb,
+      price,
+      status,
+      category,
+      description_hu,
+      description_de,
+      description_gb,
+    } = validateForm.data;
 
-  const images: FormDataEntryValue[] = formData.getAll("file");
-  const { urls, error } = await uploadImages(images, galleryFolder);
-
-  if (error) {
-    return {
-      error: "Képfeltöltés hiba: " + error,
-      status: 500,
-    };
-  }
-
-  if (urls) {
-    // if no image create empty folder
-
-    if (urls.length === 0) {
-      await createFolder(galleryFolder);
-    }
-
-    // insert product into database
-
-    const gallery = `'${urls.join("', '")}'`;
-
+    //check title_hu is unique
     try {
-      // @ts-ignore
-      await sql` INSERT INTO products (title_hu, title_de, title_gb, price, status, category, description_hu, description_de, description_gb, modify_date, gallery_folder, gallery) VALUES (${title_hu}, ${title_de}, ${title_gb}, ${price}, ${status}, ${category}, ${description_hu}, ${description_de}, ${description_gb}, ${date}, ${galleryFolder}, ${urls}) 
-    `;
+      const titleExist = await fetchProductByTitleHu(title_hu);
+      if (titleExist) {
+        return {
+          error:
+            "A magyar név már létezik az adatbázisban. Válasszon másik nevet.",
+          status: 500,
+        };
+      }
     } catch (error) {
+      // means title_hu have not used yet
+    }
+    const date = new Date().toISOString();
+    const galleryFolder = slugify(title_hu);
+
+    // upload images to cloudinary and get urls
+
+    const images: FormDataEntryValue[] = formData.getAll("file");
+    const { urls, error } = await uploadImages(images, galleryFolder);
+
+    if (error) {
       return {
-        error: "Adatbázis hiba: " + error,
+        error: "Képfeltöltés hiba: " + error,
         status: 500,
       };
+    }
+
+    if (urls) {
+      // if no image create empty folder
+
+      if (urls.length === 0) {
+        await createFolder(galleryFolder);
+      }
+
+      // insert product into database
+
+      const gallery = `'${urls.join("', '")}'`;
+
+      try {
+        // @ts-ignore
+        await sql` INSERT INTO products (title_hu, title_de, title_gb, price, status, category, description_hu, description_de, description_gb, modify_date, gallery_folder, gallery) VALUES (${title_hu}, ${title_de}, ${title_gb}, ${price}, ${status}, ${category}, ${description_hu}, ${description_de}, ${description_gb}, ${date}, ${galleryFolder}, ${urls}) 
+    `;
+      } catch (error) {
+        return {
+          error: "Adatbázis hiba: " + error,
+          status: 500,
+        };
+      }
     }
   }
 

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 
 export default function Navlinks() {
   const links = [
@@ -15,7 +16,15 @@ export default function Navlinks() {
   ];
 
   const pathname = usePathname();
+  /* const { data, status } = useSession();
 
+  console.log("auth ", status);
+  console.log("data ", data);
+
+  if (status === "authenticated") {
+    return <p>sign out</p>;
+  }
+ */
   return (
     <>
       <nav className="float-right mr-4">
