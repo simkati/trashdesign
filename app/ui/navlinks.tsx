@@ -16,15 +16,7 @@ export default function Navlinks() {
   ];
 
   const pathname = usePathname();
-  /* const { data, status } = useSession();
 
-  console.log("auth ", status);
-  console.log("data ", data);
-
-  if (status === "authenticated") {
-    return <p>sign out</p>;
-  }
- */
   return (
     <>
       <nav className="float-right mr-4">

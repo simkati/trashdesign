@@ -76,7 +76,10 @@ function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button className="mt-4 w-full flex h-10 items-center bg-green-800 font-semibold text-white p-2 rounded">
+    <button
+      className="mt-4 w-full flex h-10 items-center bg-green-800 font-semibold text-white p-2 rounded aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+      aria-disabled={pending}
+    >
       Bejelentkezés{" "}
       <IoIosArrowForward className="ml-auto h-5 w-5 text-gray-50" />
     </button>

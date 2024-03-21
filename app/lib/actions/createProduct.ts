@@ -48,7 +48,7 @@ export default async function createProduct(formData: FormData) {
     //check title_hu is unique
     try {
       const titleExist = await fetchProductByTitleHu(title_hu);
-      console.log("exist" + titleExist);
+
       if (titleExist) {
         return {
           error:

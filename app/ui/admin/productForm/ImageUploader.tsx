@@ -15,7 +15,6 @@ export default function ImageUpload({ setFiles }: ImageUploadProp) {
     const uploaded = [...uploadedFiles];
     files.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-        console.log("size " + file.size);
         if (file.size > 3000000) {
           setError(true);
         } else {
