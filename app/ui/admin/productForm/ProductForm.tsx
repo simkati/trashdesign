@@ -120,7 +120,7 @@ export default function ProductForm({ product }: ProductFormProp) {
             />
           </div>
           <div className="my-2">
-            <DE title="Német" className="mr-3 w-8 inline" />
+            <DE title="Nemet" className="mr-3 w-8 inline" />
             <input
               type="text"
               name="title_de"
