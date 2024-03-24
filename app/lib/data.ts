@@ -93,3 +93,21 @@ export async function fetchProductsPages(
     throw new Error("Failed to fetch total number of products.");
   }
 }
+
+export async function fetchLatestProducts() {
+  noStore();
+
+  try {
+    const products = await sql<Product>`
+    SELECT *
+    FROM products
+    WHERE status = 'SALE'
+    ORDER BY modify_date DESC
+    LIMIT 2`;
+
+    return products.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch products.");
+  }
+}
