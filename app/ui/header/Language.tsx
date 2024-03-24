@@ -17,7 +17,7 @@ export default function LangSelector() {
       <p
         key={lang}
         className={clsx(
-          "flex flex-col items-center px-3 py-2 rounded cursor-pointer transition",
+          "flex flex-col items-center px-3 py-2 rounded cursor-pointer transition  text-xs",
           {
             "border border-orange-600": index === 1,
           }
@@ -30,5 +30,5 @@ export default function LangSelector() {
     );
   });
 
-  return <div className="float-right text-xs flex">{langList}</div>;
+  return <>{langList}</>;
 }

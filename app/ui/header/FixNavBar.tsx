@@ -30,8 +30,8 @@ export default function FixNavBar() {
   return (
     <div
       className={clsx(
-        "fixed top-0 w-full z-20 right-0 bg-white h-0 overflow-hidden transition-[height]",
-        { "h-12 my-auto": isVisible }
+        "invisible fixed top-0 w-full z-20 right-0 bg-white h-0 overflow-hidden transition-[height]",
+        { "h-12 my-auto md:visible": isVisible }
       )}
     >
       {isVisible && (

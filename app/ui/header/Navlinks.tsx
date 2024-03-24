@@ -18,11 +18,11 @@ export default function Navlinks() {
 
   return (
     <>
-      <nav className="gap-3 flex">
+      <nav className="bg-white z-20 p-2 fixed top-0 right-10 md:right-0 md:z-0 md:relative md:bg-none md:p-0 md:gap-3 md:flex">
         {links.map((link) => {
           return (
             <Link
-              className={clsx("inline-block hover:underline", {
+              className={clsx("md:inline-block hover:underline", {
                 "text-orange-600": pathname === link.href,
               })}
               key={link.text}

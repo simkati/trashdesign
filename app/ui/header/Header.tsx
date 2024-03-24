@@ -1,34 +1,28 @@
-import Navlinks from "./Navlinks";
+import BtnSection from "./BtnSection";
 import Link from "next/link";
 import NextImage from "next/image";
 import { signOut, auth } from "@/auth";
 import { FaPowerOff } from "react-icons/fa";
-import LangSelector from "./Language";
 import FixNavBar from "./FixNavBar";
 
 export default async function Header() {
   const authc = await auth();
 
   return (
-    <header className="mt-2 pb-5 lg:pb-0 lg:my-5 w-full px-3 lg:px-10 relative">
+    <header className="  w-full px-3 top-0 fixed z-20 bg-white md:mt-2 md:pb-5 md:relative md:bg-none lg:pl-10 lg:pb-0 lg:my-5">
       <Link href="/" className="inline-block">
         <NextImage
           alt="logo"
           width={150}
           height={20}
           src="/logoOrange.png"
-          className="mx-auto inline lg:block"
+          className="mx-auto block md:inline lg:block w-24 md:w-[150px] h-auto "
         />
-        <p className="text-xl inline ml-3 lg:ml-0 lg:block">
+        <p className="text-xs sm:text-base block ml-0 md:text-xl md:inline md:ml-3 lg:ml-0 lg:block">
           Régi tárgyak új szerepben
         </p>
       </Link>
-      <LangSelector />
-      {!authc && (
-        <div className="absolute bottom-1 lg:bottom-0 right-10">
-          <Navlinks />
-        </div>
-      )}
+      {!authc && <BtnSection />}
       {authc && (
         <div className="float-right mr-4">
           <form
