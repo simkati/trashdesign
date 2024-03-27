@@ -5,7 +5,7 @@ import Flag from "./Flag";
 import clsx from "clsx";
 
 export default function LangSelector() {
-  const [languages, setLanguages] = useState(["De", "Hu", "Gb"]);
+  const [languages, setLanguages] = useState(["DE", "HU", "GB"]);
   const setLang = (index: number) => {
     if (index === 1) return;
     if (index === 0) setLanguages([languages[2], languages[0], languages[1]]);
@@ -16,15 +16,11 @@ export default function LangSelector() {
     return (
       <p
         key={lang}
-        className={clsx(
-          "flex flex-col items-center px-3 py-2 rounded cursor-pointer transition  text-xs",
-          {
-            "border border-orange-600": index === 1,
-          }
-        )}
+        className={clsx("items-center px-2 cursor-pointer inline-block", {
+          "border-x border-gray-600 text-orange-600": index === 1,
+        })}
         onClick={() => setLang(index)}
       >
-        <Flag lang={lang} />
         {lang}
       </p>
     );

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Jaldi } from "next/font/google";
 import "./globals.css";
 import Header from "./ui/header/Header";
 import Footer from "./ui/footer";
 import { SessionProvider } from "next-auth/react";
 
-const inter = Inter({ subsets: ["latin"] });
+const jaldi = Jaldi({ subsets: ["latin-ext"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Trash design",
@@ -20,9 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="hu">
-      <body className={inter.className}>
+      <body className={jaldi.className}>
         <Header />
-        <div className="mt-16 md:mt-0">{children}</div>
+        <div className="mt-12 md:mt-0">{children}</div>
         <Footer />
       </body>
     </html>

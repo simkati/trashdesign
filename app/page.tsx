@@ -39,8 +39,6 @@ export default function Home() {
             darabkáját. Egy tárgy történetét, amit aztán Te írhatsz majd tovább.
           </p>
         </div>
-        <Title title="legújabb termékeink" />
-        <LatestProducts />
       </div>
     </main>
   );

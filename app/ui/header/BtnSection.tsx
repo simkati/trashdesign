@@ -10,21 +10,21 @@ export default function BtnSection() {
   const [mobilMenu, setMobilMenu] = useState(false);
 
   return (
-    <div className="float-right flex mt-2 md:mt-0">
-      <LangSelector />
-      <button
-        className="ml-3 md:ml-0 md:invisible flex"
-        onClick={() => setMobilMenu(!mobilMenu)}
-      >
-        <HiMenu className="h-7 w-7 inline align-top mt-1" />
-      </button>
+    <div className="float-right mt-2">
       <div
-        className={clsx("absolute bottom-1 lg:bottom-0 right-10 md:visible", {
+        className={clsx("right-10 inline-block md:visible", {
           invisible: !mobilMenu,
         })}
       >
         <Navlinks />
       </div>
+      <LangSelector />
+      <button
+        className="ml-3 md:ml-0 md:invisible inline-block md:w-0 lg:w-fit"
+        onClick={() => setMobilMenu(!mobilMenu)}
+      >
+        <HiMenu className="h-7 w-7 inline" />
+      </button>
     </div>
   );
 }

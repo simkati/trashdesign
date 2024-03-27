@@ -9,18 +9,15 @@ export default async function Header() {
   const authc = await auth();
 
   return (
-    <header className="  w-full px-3 top-0 fixed z-20 bg-white md:mt-2 md:pb-5 md:relative md:bg-none lg:pl-10 lg:pb-0 lg:my-5">
+    <header className="  w-full px-3 pt-2 top-0 fixed z-20 bg-white lg:pl-10 lg:pb-0">
       <Link href="/" className="inline-block">
         <NextImage
           alt="logo"
-          width={150}
-          height={20}
+          width={100}
+          height={15}
           src="/logoOrange.png"
-          className="mx-auto block md:inline lg:block w-24 md:w-[150px] h-auto "
+          className="mx-auto block w-24 md:w-[100px] h-auto "
         />
-        <p className="text-xs sm:text-base block ml-0 md:text-xl md:inline md:ml-3 lg:ml-0 lg:block">
-          Régi tárgyak új szerepben
-        </p>
       </Link>
       {!authc && <BtnSection />}
       {authc && (
@@ -38,7 +35,6 @@ export default async function Header() {
           </form>
         </div>
       )}
-      {!authc && <FixNavBar />}
     </header>
   );
 }
