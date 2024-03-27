@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Flag from "./Flag";
 import clsx from "clsx";
 
 export default function LangSelector() {

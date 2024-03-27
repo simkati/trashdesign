@@ -3,7 +3,6 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { signOut, auth } from "@/auth";
 import { FaPowerOff } from "react-icons/fa";
-import FixNavBar from "./FixNavBar";
 
 export default async function Header() {
   const authc = await auth();

@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="hu">
       <body className={jaldi.className}>
         <Header />
-        <div className="mt-12 md:mt-0">{children}</div>
+        <div className="mt-14">{children}</div>
         <Footer />
       </body>
     </html>
